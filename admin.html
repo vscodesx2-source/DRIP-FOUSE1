@@ -1,0 +1,676 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080808">
+
+    <title>DRIP FOUSE | Command Center</title>
+
+    <link rel="stylesheet" href="admin.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-mark">DF</div>
+            <div>
+                <h2>DRIP FO<span>USE</span></h2>
+                <small>COMMAND CENTER</small>
+            </div>
+        </div>
+
+        <div class="sidebar-label">MAIN MENU</div>
+
+        <nav class="sidebar-nav">
+
+            <button class="nav-item active" data-section="overview">
+                <span>◈</span> Overview
+            </button>
+
+            <button class="nav-item" data-section="orders">
+                <span>▤</span> Orders
+                <span class="nav-count" id="pendingBadge">0</span>
+            </button>
+
+            <button class="nav-item" data-section="products">
+                <span>◇</span> Products
+            </button>
+
+            <button class="nav-item" data-section="customers">
+                <span>♙</span> Customers
+            </button>
+
+        </nav>
+
+        <div class="sidebar-label">MANAGEMENT</div>
+
+        <nav class="sidebar-nav">
+
+            <button class="nav-item" data-section="analytics">
+                <span>▥</span> Analytics
+            </button>
+
+            <button class="nav-item" data-section="activity">
+                <span>◷</span> Activity Logs
+            </button>
+
+            <button class="nav-item" data-section="settings">
+                <span>⚙</span> Settings
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="admin-status">
+                <span class="status-dot"></span>
+                SYSTEM OPERATIONAL
+            </div>
+
+            <button class="nav-item logout-btn" id="logoutBtn">
+                <span>↪</span> Sign Out
+            </button>
+
+            <a href="index.html" class="back-store">
+                ← Back to Store
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button id="menuToggle" class="menu-toggle">☰</button>
+
+                <div>
+                    <div class="breadcrumb">DRIP FOUSE / ADMIN</div>
+                    <h1 id="pageTitle">Overview</h1>
+                </div>
+
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="live-indicator">
+                    <span class="status-dot"></span>
+                    LIVE SYSTEM
+                </div>
+
+                <div class="admin-avatar" id="adminAvatar">A</div>
+
+                <div class="admin-info">
+                    <strong id="adminName">Administrator</strong>
+                    <small>SUPER ADMIN</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- OVERVIEW -->
+        <section class="page-section active" id="overview">
+
+            <div class="welcome-banner">
+
+                <div>
+                    <span class="eyebrow">YOUR BUSINESS AT A GLANCE</span>
+                    <h2>Welcome to your <span>Command Center.</span></h2>
+                    <p>Monitor your store, manage orders and control your business.</p>
+                </div>
+
+                <div class="welcome-decoration">DF</div>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+            <div class="stats-grid">
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Total Revenue</span>
+                        <span class="stat-icon">◆</span>
+                    </div>
+                    <h2 id="totalRevenue">0 DT</h2>
+                    <small>Confirmed orders</small>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Total Orders</span>
+                        <span class="stat-icon">▤</span>
+                    </div>
+                    <h2 id="totalOrders">0</h2>
+                    <small>All customer orders</small>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Pending Orders</span>
+                        <span class="stat-icon">◷</span>
+                    </div>
+                    <h2 id="pendingOrders">0</h2>
+                    <small>Waiting for review</small>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Total Customers</span>
+                        <span class="stat-icon">♙</span>
+                    </div>
+                    <h2 id="totalCustomers">0</h2>
+                    <small>Registered accounts</small>
+                </article>
+
+            </div>
+
+
+            <!-- CHARTS -->
+            <div class="dashboard-grid">
+
+                <div class="panel revenue-panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <span class="eyebrow">PERFORMANCE</span>
+                            <h3>Revenue Overview</h3>
+                        </div>
+
+                        <span class="panel-tag">ALL TIME</span>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+
+                </div>
+
+
+                <div class="panel orders-summary">
+
+                    <div class="panel-header">
+                        <div>
+                            <span class="eyebrow">ORDER STATUS</span>
+                            <h3>Order Breakdown</h3>
+                        </div>
+                    </div>
+
+                    <div class="chart-container doughnut-container">
+                        <canvas id="ordersChart"></canvas>
+                    </div>
+
+                    <div class="chart-legend">
+                        <span><i class="legend-dot pending"></i> Pending</span>
+                        <span><i class="legend-dot accepted"></i> Accepted</span>
+                        <span><i class="legend-dot rejected"></i> Declined</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT ORDERS -->
+            <div class="panel recent-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="eyebrow">LATEST ACTIVITY</span>
+                        <h3>Recent Orders</h3>
+                    </div>
+
+                    <button class="text-button" data-go="orders">
+                        View All →
+                    </button>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ORDER ID</th>
+                                <th>CUSTOMER</th>
+                                <th>ITEMS</th>
+                                <th>TOTAL</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="recentOrdersBody">
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    Loading orders...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ORDERS -->
+        <section class="page-section" id="orders">
+
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">ORDER CONTROL</span>
+                    <h2>Order Management</h2>
+                    <p>Review customer information and manage every order.</p>
+                </div>
+            </div>
+
+            <div class="toolbar">
+
+                <input
+                    type="search"
+                    id="orderSearch"
+                    placeholder="Search customer, phone, email or order..."
+                >
+
+                <select id="orderFilter">
+                    <option value="all">All Orders</option>
+                    <option value="pending">Pending</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="processing">Processing</option>
+                    <option value="packaging">Packaging</option>
+                    <option value="out_for_delivery">Out for Delivery</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="declined">Declined</option>
+                </select>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="table-wrapper">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ORDER</th>
+                                <th>CUSTOMER DETAILS</th>
+                                <th>PRODUCTS</th>
+                                <th>TOTAL</th>
+                                <th>PAYMENT</th>
+                                <th>STATUS</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="ordersTableBody">
+                            <tr>
+                                <td colspan="7" class="empty-state">
+                                    Loading orders...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRODUCTS MANAGEMENT -->
+        <section class="page-section" id="products">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="eyebrow">STORE INVENTORY</span>
+                    <h2>Product Management</h2>
+                    <p>Manage your store products.</p>
+                </div>
+
+                <button
+                    class="primary-btn"
+                    id="addProductBtn"
+                    type="button"
+                >
+                    + ADD NEW PRODUCT
+                </button>
+
+            </div>
+
+
+            <!-- ADD / EDIT PRODUCT FORM -->
+            <div class="panel product-form-panel" id="productFormPanel" hidden>
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="eyebrow">INVENTORY CONTROL</span>
+                        <h3 id="productFormTitle">Add New Product</h3>
+                    </div>
+
+                </div>
+
+
+                <form id="productForm">
+
+                    <input type="hidden" id="productId">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="productName">PRODUCT NAME</label>
+
+                            <input
+                                type="text"
+                                id="productName"
+                                placeholder="Enter product name"
+                                maxlength="150"
+                                required
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="productCategory">CATEGORY</label>
+
+                            <select id="productCategory" required>
+                                <option value="">Select category</option>
+                                <option value="Chaussures">Chaussures</option>
+                                <option value="Vêtements">Vêtements</option>
+                                <option value="Accessoires">Accessoires</option>
+                                <option value="Casquettes">Casquettes</option>
+                                <option value="Sacs">Sacs</option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="productPrice">PRICE (DT)</label>
+
+                            <input
+                                type="number"
+                                id="productPrice"
+                                min="0"
+                                step="0.01"
+                                placeholder="0.00"
+                                required
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="productStock">STOCK QUANTITY</label>
+
+                            <input
+                                type="number"
+                                id="productStock"
+                                min="0"
+                                step="1"
+                                placeholder="0"
+                                required
+                            >
+                        </div>
+
+
+                        <div class="form-group full-width">
+                            <label for="productDescription">DESCRIPTION</label>
+
+                            <textarea
+                                id="productDescription"
+                                rows="4"
+                                maxlength="2000"
+                                placeholder="Describe your product..."
+                            ></textarea>
+                        </div>
+
+
+                        <div class="form-group full-width">
+                            <label for="productImage">PRODUCT IMAGE</label>
+
+                            <input
+                                type="file"
+                                id="productImage"
+                                accept="image/*"
+                            >
+
+                            <small>
+                                Upload a product image. When editing,
+                                leave empty to keep the current image.
+                            </small>
+                        </div>
+
+
+                        <div class="form-group full-width">
+
+                            <label class="publish-option">
+                                <input
+                                    type="checkbox"
+                                    id="productPublished"
+                                    checked
+                                >
+
+                                Publish product in store
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <div id="productMessage" class="form-message" aria-live="polite"></div>
+
+
+                    <div class="form-actions">
+
+                        <button
+                            type="button"
+                            class="secondary-btn"
+                            id="cancelProductBtn"
+                        >
+                            CANCEL
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="primary-btn"
+                            id="saveProductBtn"
+                        >
+                            SAVE PRODUCT
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- PRODUCT INVENTORY -->
+            <div class="panel inventory-panel">
+
+                <div class="panel-header inventory-header">
+
+                    <div>
+                        <span class="eyebrow">PRODUCT DATABASE</span>
+                        <h3>Store Inventory</h3>
+
+                        <small id="adminProductCount">
+                            0 PRODUCTS
+                        </small>
+                    </div>
+
+                    <input
+                        type="search"
+                        id="productSearch"
+                        placeholder="Search products..."
+                    >
+
+                </div>
+
+                <div
+                    id="productsGrid"
+                    class="admin-products-grid"
+                >
+
+                    <div class="inventory-loading">
+                        Loading products...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CUSTOMERS -->
+        <section class="page-section" id="customers">
+
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">CUSTOMER DATABASE</span>
+                    <h2>Customers</h2>
+                    <p>View your registered customers.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+
+                <div class="table-wrapper">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>FULL NAME</th>
+                                <th>EMAIL</th>
+                                <th>JOINED</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="customersTableBody">
+                            <tr>
+                                <td colspan="3" class="empty-state">
+                                    Loading customers...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ANALYTICS -->
+        <section class="page-section" id="analytics">
+
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">BUSINESS INTELLIGENCE</span>
+                    <h2>Analytics</h2>
+                    <p>Understand your store performance.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="empty-state">
+                    Advanced analytics will be activated in the next stage.
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ACTIVITY -->
+        <section class="page-section" id="activity">
+
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">SECURITY & MONITORING</span>
+                    <h2>Activity Logs</h2>
+                    <p>Monitor administrative activity.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="empty-state">
+                    Activity logs will be activated in the next stage.
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- SETTINGS -->
+        <section class="page-section" id="settings">
+
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">SYSTEM CONFIGURATION</span>
+                    <h2>Admin Settings</h2>
+                    <p>Administrator account information.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+
+                <div class="settings-info">
+                    <span>ADMIN EMAIL</span>
+                    <strong id="settingsAdminEmail">Loading...</strong>
+                </div>
+
+                <div class="settings-info">
+                    <span>ACCOUNT ROLE</span>
+                    <strong>ADMINISTRATOR</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="admin-footer">
+            DRIP FO<span>USE</span> COMMAND CENTER
+            <small>PRIVATE ADMINISTRATIVE INTERFACE</small>
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- ADMIN JAVASCRIPT -->
+<script type="module" src="admin.js"></script>
+
+</body>
+</html>

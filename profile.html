@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080808">
+
+    <title>DRIP FOUSE | My Account</title>
+
+    <link rel="stylesheet" href="profile.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- SUPABASE LIBRARY -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+    <header class="account-header">
+        <a href="index.html" class="brand">DRIP FOUSE</a>
+        <a href="index.html" class="back-store">BACK TO STORE</a>
+    </header>
+
+    <main class="account-layout">
+
+        <aside class="account-sidebar">
+
+            <h2>MY ACCOUNT</h2>
+
+            <button class="nav-btn active" data-section="profile">
+                MY PROFILE
+            </button>
+
+            <button class="nav-btn" data-section="orders">
+                MY ORDERS
+            </button>
+
+            <button class="nav-btn" data-section="settings">
+                SETTINGS
+            </button>
+
+            <button class="logout-btn" id="logoutBtn">
+                SIGN OUT
+            </button>
+
+        </aside>
+
+        <section class="account-content">
+
+            <!-- PROFILE -->
+            <div class="account-section active" id="profile">
+
+                <p class="gold-label">PERSONAL INFORMATION</p>
+                <h1>MY PROFILE</h1>
+
+                <div class="profile-card">
+
+                    <div class="avatar-area">
+                        <img id="avatarPreview" alt="Profile picture">
+
+                        <label for="avatarInput" class="upload-btn">
+                            CHANGE PHOTO
+                        </label>
+
+                        <input type="file"
+                               id="avatarInput"
+                               accept="image/jpeg,image/png,image/webp"
+                               hidden>
+                    </div>
+
+                    <div class="profile-fields">
+
+                        <label>FULL NAME</label>
+                        <input id="fullName"
+                               type="text"
+                               placeholder="Your full name">
+
+                        <label>EMAIL ADDRESS</label>
+                        <input id="email"
+                               type="email"
+                               disabled>
+
+                        <button id="saveProfileBtn">
+                            SAVE CHANGES
+                        </button>
+
+                        <p id="profileMessage"></p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ORDERS -->
+            <div class="account-section" id="orders">
+
+                <p class="gold-label">YOUR PURCHASES</p>
+                <h1>MY ORDERS</h1>
+
+                <div id="ordersList">
+                    <p>Loading your orders...</p>
+                </div>
+
+            </div>
+
+            <!-- SETTINGS -->
+            <div class="account-section" id="settings">
+
+                <p class="gold-label">ACCOUNT PREFERENCES</p>
+                <h1>SETTINGS</h1>
+
+                <div class="settings-card">
+                    <h3>ACCOUNT SECURITY</h3>
+                    <p>Your account is protected by Supabase Authentication.</p>
+                </div>
+
+                <div class="settings-card">
+                    <h3>EMAIL ADDRESS</h3>
+                    <p id="settingsEmail">Loading...</p>
+                </div>
+
+                <button class="logout-btn" id="settingsLogoutBtn">
+                    SIGN OUT
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script type="module" src="profile.js"></script>
+
+</body>
+</html>

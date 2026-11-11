@@ -1,0 +1,349 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #080808;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+.account-header {
+    height: 85px;
+    padding: 0 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #242424;
+}
+
+.brand {
+    color: #d6ad55;
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-decoration: none;
+}
+
+.back-store {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.account-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 60px;
+    max-width: 1250px;
+    margin: 65px auto;
+    padding: 0 25px;
+}
+
+.account-sidebar {
+    border-right: 1px solid #292929;
+    padding-right: 25px;
+}
+
+.account-sidebar h2 {
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 35px;
+}
+
+.nav-btn {
+    display: block;
+    width: 100%;
+    padding: 17px;
+    margin-bottom: 10px;
+    text-align: left;
+    background: transparent;
+    border: 1px solid transparent;
+    color: #999;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+    color: #d6ad55;
+    border-color: #6d5429;
+    background: #17130c;
+}
+
+.gold-label {
+    color: #d6ad55;
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.account-section {
+    display: none;
+}
+
+.account-section.active {
+    display: block;
+}
+
+.account-content h1 {
+    font-size: 35px;
+    letter-spacing: 2px;
+    margin-bottom: 35px;
+}
+
+.profile-card,
+.settings-card {
+    background: #111;
+    border: 1px solid #282828;
+    padding: 35px;
+    border-radius: 8px;
+}
+
+.profile-card {
+    display: flex;
+    gap: 45px;
+    align-items: flex-start;
+}
+
+.avatar-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+#avatarPreview {
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #d6ad55;
+    background: #222;
+}
+
+.upload-btn {
+    color: #d6ad55;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.profile-fields {
+    flex: 1;
+}
+
+.profile-fields label {
+    display: block;
+    color: #aaa;
+    font-size: 11px;
+    margin: 15px 0 9px;
+    letter-spacing: 1px;
+}
+
+.profile-fields input {
+    width: 100%;
+    padding: 15px;
+    background: #080808;
+    border: 1px solid #333;
+    color: white;
+    outline: none;
+    border-radius: 4px;
+}
+
+.profile-fields input:focus {
+    border-color: #d6ad55;
+}
+
+#saveProfileBtn {
+    margin-top: 25px;
+    padding: 15px 25px;
+    background: #d6ad55;
+    border: none;
+    color: #080808;
+    font-weight: 800;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#saveProfileBtn:hover {
+    background: #f0cf82;
+}
+
+#profileMessage {
+    margin-top: 15px;
+    color: #d6ad55;
+    font-size: 13px;
+}
+
+.settings-card {
+    margin-bottom: 20px;
+}
+
+.settings-card h3 {
+    color: #d6ad55;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.settings-card p {
+    color: #aaa;
+    font-size: 13px;
+}
+
+.logout-btn {
+    margin-top: 25px;
+    padding: 15px 25px;
+    background: transparent;
+    border: 1px solid #8d2929;
+    color: #e45a5a;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+#ordersList {
+    background: #111;
+    padding: 25px;
+    border: 1px solid #282828;
+    border-radius: 8px;
+    color: #aaa;
+}
+
+@media (max-width: 750px) {
+    .account-layout {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        margin-top: 30px;
+    }
+
+    .account-sidebar {
+        border-right: none;
+        border-bottom: 1px solid #292929;
+        padding: 0 0 20px;
+    }
+
+    .profile-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 22px;
+    }
+
+    .account-content h1 {
+        font-size: 27px;
+    }
+
+    .account-header {
+        padding: 0 20px;
+    }
+}
+
+/* ==========================================
+   DRIP FOUSE - PROFILE SYSTEM FIX
+========================================== */
+
+/* Make account sections display correctly */
+.account-section {
+    display: none !important;
+    width: 100%;
+}
+
+.account-section.active {
+    display: block !important;
+    animation: profileFadeIn 0.3s ease;
+}
+
+@keyframes profileFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Orders */
+#ordersList {
+    display: grid;
+    gap: 18px;
+}
+
+.order-card {
+    background: #171717;
+    border: 1px solid #333;
+    border-radius: 7px;
+    padding: 22px;
+}
+
+.order-card h3 {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.order-card p {
+    color: #aaa;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.order-status {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 7px 13px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.order-status.pending {
+    background: #33290f;
+    color: #e5bd60;
+}
+
+.order-status.accepted {
+    background: #123522;
+    color: #64d58a;
+}
+
+.order-status.rejected {
+    background: #3a1717;
+    color: #ff7777;
+}
+
+/* Navigation */
+.nav-btn {
+    position: relative;
+    transition: 0.25s ease;
+}
+
+.nav-btn.active {
+    border-color: #6d5429;
+    color: #d6ad55;
+}
+
+/* Avatar */
+#avatarPreview {
+    display: block;
+    object-fit: cover;
+}
+
+/* Mobile */
+@media (max-width: 750px) {
+    #ordersList {
+        padding: 15px;
+    }
+
+    .order-card {
+        padding: 17px;
+    }
+}
+

@@ -1,0 +1,177 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            #30230b 0%,
+            #11100c 35%,
+            #050505 75%
+        );
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 460px;
+    animation: appear 0.8s ease;
+}
+
+.login-card {
+    background: rgba(15, 15, 15, 0.94);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 22px;
+    padding: 42px 35px;
+    text-align: center;
+    box-shadow: 0 0 65px #d4af3715;
+}
+
+.login-logo {
+    width: 105px;
+    height: 105px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 15px #d4af3750);
+}
+
+.gold-label {
+    color: #d4af37;
+    letter-spacing: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 22px;
+}
+
+h1 {
+    font-size: 27px;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: #999;
+    font-size: 13px;
+    margin-bottom: 30px;
+}
+
+input {
+    width: 100%;
+    background: #090909;
+    border: 1px solid #333;
+    padding: 15px;
+    margin: 9px 0 20px;
+    border-radius: 9px;
+    color: white;
+    outline: none;
+}
+
+input:focus {
+    border-color: #d4af37;
+    box-shadow: 0 0 12px #d4af3725;
+}
+
+label {
+    display: block;
+    text-align: left;
+    font-size: 12px;
+    color: #ccc;
+}
+
+.google-btn,
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 800;
+    transition: 0.3s;
+}
+
+.google-btn {
+    background: #fff;
+    color: #111;
+    border: none;
+}
+
+.google-btn span {
+    font-weight: 900;
+    margin-right: 12px;
+}
+
+.submit-btn {
+    background: linear-gradient(110deg, #8b681d, #f5d77b, #b68b28);
+    color: #080808;
+    border: none;
+    letter-spacing: 2px;
+}
+
+.google-btn:hover,
+.submit-btn:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.12);
+}
+
+.separator {
+    margin: 25px 0;
+    color: #777;
+    font-size: 11px;
+}
+
+.register-text {
+    margin-top: 25px;
+    color: #999;
+    font-size: 13px;
+}
+
+.register-text a {
+    color: #e3c15c;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 25px;
+    color: #888;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+#message {
+    margin-top: 15px;
+    color: #e4c45e;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media(max-width: 480px) {
+    .login-card {
+        padding: 35px 22px;
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+}

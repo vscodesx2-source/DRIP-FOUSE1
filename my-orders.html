@@ -1,0 +1,550 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080808">
+
+    <title>MY ORDERS | DRIP FOUSE</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --orders-black: #080808;
+            --orders-surface: #101010;
+            --orders-gold: #D4AF37;
+            --orders-light-gold: #F3D98B;
+            --orders-muted: #92908a;
+            --orders-border: rgba(212,175,55,.19);
+            --orders-font: "DM Sans", sans-serif;
+            --orders-display: "Cormorant Garamond", serif;
+        }
+
+        body {
+            background: var(--orders-black);
+            color: #f5f2e9;
+            font-family: var(--orders-font);
+        }
+
+        .orders-page {
+            min-height: 100vh;
+            padding: 145px 6% 90px;
+            background:
+                radial-gradient(ellipse at 15% 15%, rgba(212,175,55,.055), transparent 35%),
+                radial-gradient(ellipse at 90% 60%, rgba(212,175,55,.035), transparent 35%),
+                #080808;
+        }
+
+        .orders-container {
+            max-width: 1250px;
+            margin: auto;
+        }
+
+        .orders-breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 35px;
+            color: #77736a;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .orders-breadcrumb a {
+            color: #99958b;
+            text-decoration: none;
+        }
+
+        .orders-breadcrumb span:last-child {
+            color: var(--orders-gold);
+        }
+
+        .orders-heading {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .orders-eyebrow {
+            color: var(--orders-gold);
+            font-size: 10px;
+            letter-spacing: 6px;
+        }
+
+        .orders-heading h1 {
+            font-family: var(--orders-display);
+            font-size: clamp(58px, 8vw, 100px);
+            font-weight: 500;
+            letter-spacing: 3px;
+            margin: 17px 0;
+        }
+
+        .orders-heading h1 span {
+            color: var(--orders-gold);
+        }
+
+        .orders-heading p {
+            color: var(--orders-muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .orders-heading-line {
+            width: 65px;
+            height: 1px;
+            background: var(--orders-gold);
+            margin: 25px auto 0;
+        }
+
+        .orders-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            border-bottom: 1px solid var(--orders-border);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .orders-toolbar h2 {
+            font-family: var(--orders-display);
+            font-size: 30px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .orders-toolbar span {
+            color: var(--orders-gold);
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .order-card {
+            background: linear-gradient(125deg, #14120e, #0e0e0e);
+            border: 1px solid var(--orders-border);
+            padding: 28px;
+            transition: border-color .3s, transform .3s;
+        }
+
+        .order-card:hover {
+            border-color: rgba(212,175,55,.45);
+            transform: translateY(-2px);
+        }
+
+        .order-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+        }
+
+        .order-number {
+            color: var(--orders-gold);
+            font-size: 10px;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .order-date {
+            color: var(--orders-muted);
+            font-size: 11px;
+        }
+
+        .order-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 13px;
+            border: 1px solid rgba(212,175,55,.3);
+            color: var(--orders-light-gold);
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .order-status::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--orders-gold);
+            box-shadow: 0 0 10px var(--orders-gold);
+        }
+
+        .order-status.cancelled,
+        .order-status.declined,
+        .order-status.rejected {
+            color: #e58d83;
+            border-color: rgba(229,141,131,.3);
+        }
+
+        .order-status.cancelled::before,
+        .order-status.declined::before,
+        .order-status.rejected::before {
+            background: #e58d83;
+            box-shadow: 0 0 10px #e58d83;
+        }
+
+        .order-product {
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            gap: 20px;
+            align-items: center;
+            padding: 23px 0;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+        }
+
+        .order-product img {
+            width: 100px;
+            height: 110px;
+            object-fit: contain;
+            padding: 5px;
+            background: #090909;
+            border: 1px solid rgba(255,255,255,.05);
+        }
+
+        .order-product-category {
+            color: var(--orders-gold);
+            font-size: 9px;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .order-product h3 {
+            font-family: var(--orders-display);
+            font-size: 25px;
+            font-weight: 600;
+            margin: 0 0 7px;
+        }
+
+        .order-product p {
+            color: var(--orders-muted);
+            font-size: 11px;
+            margin: 0;
+        }
+
+        .order-product-price {
+            color: var(--orders-light-gold);
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* TRACKER */
+
+        .order-tracker {
+            padding: 25px 5px 10px;
+        }
+
+        .tracker-heading {
+            color: var(--orders-muted);
+            font-size: 9px;
+            letter-spacing: 2px;
+            margin-bottom: 22px;
+        }
+
+        .tracker-steps {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            position: relative;
+        }
+
+        .tracker-step {
+            position: relative;
+            text-align: center;
+            min-width: 0;
+        }
+
+        .tracker-step::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: -50%;
+            width: 100%;
+            height: 1px;
+            background: #37332a;
+        }
+
+        .tracker-step:first-child::before {
+            display: none;
+        }
+
+        .tracker-dot {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: 17px;
+            height: 17px;
+            margin: 0 auto 12px;
+            border: 1px solid #625a43;
+            border-radius: 50%;
+            background: #111;
+        }
+
+        .tracker-step.completed .tracker-dot,
+        .tracker-step.active .tracker-dot {
+            background: var(--orders-gold);
+            border-color: var(--orders-gold);
+            box-shadow: 0 0 12px rgba(212,175,55,.4);
+        }
+
+        .tracker-step.completed::before,
+        .tracker-step.active::before {
+            background: var(--orders-gold);
+        }
+
+        .tracker-step span:last-child {
+            display: block;
+            color: #77736a;
+            font-size: 8px;
+            letter-spacing: .6px;
+            line-height: 1.5;
+        }
+
+        .tracker-step.completed span:last-child,
+        .tracker-step.active span:last-child {
+            color: var(--orders-light-gold);
+        }
+
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-top: 1px solid rgba(255,255,255,.07);
+            padding-top: 20px;
+            margin-top: 15px;
+        }
+
+        .order-total-label {
+            color: var(--orders-muted);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+        }
+
+        .order-total {
+            display: block;
+            color: var(--orders-light-gold);
+            font-family: var(--orders-display);
+            font-size: 28px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .order-payment {
+            color: #99958b;
+            font-size: 10px;
+            text-align: right;
+            line-height: 1.8;
+        }
+
+        .orders-empty,
+        .orders-loading,
+        .orders-error {
+            padding: 75px 20px;
+            text-align: center;
+            background: #101010;
+            border: 1px solid var(--orders-border);
+        }
+
+        .orders-empty-icon {
+            color: var(--orders-gold);
+            font-family: var(--orders-display);
+            font-size: 60px;
+        }
+
+        .orders-empty h2 {
+            font-family: var(--orders-display);
+            font-size: 36px;
+            font-weight: 500;
+            margin: 15px 0 10px;
+        }
+
+        .orders-empty p,
+        .orders-loading p,
+        .orders-error p {
+            color: var(--orders-muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .orders-button {
+            display: inline-block;
+            padding: 15px 25px;
+            margin-top: 20px;
+            background: linear-gradient(110deg, #e0bf62, #b38a2d);
+            color: #090909;
+            text-decoration: none;
+            font-size: 9px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        @media(max-width: 850px) {
+            .orders-page {
+                padding: 125px 5% 65px;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .orders-page {
+                padding: 115px 4% 45px;
+            }
+
+            .orders-heading h1 {
+                font-size: 58px;
+            }
+
+            .order-card {
+                padding: 17px;
+            }
+
+            .order-product {
+                grid-template-columns: 78px 1fr;
+                gap: 13px;
+            }
+
+            .order-product img {
+                width: 78px;
+                height: 90px;
+            }
+
+            .order-product h3 {
+                font-size: 21px;
+            }
+
+            .order-product-price {
+                grid-column: 2;
+            }
+
+            .tracker-steps {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px 0;
+            }
+
+            .tracker-step::before {
+                display: none;
+            }
+
+            .tracker-step span:last-child {
+                font-size: 8px;
+            }
+
+            .order-footer {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <a href="index.html" class="logo">DRIP FOUSE</a>
+
+        <nav class="nav-links">
+
+            <a href="index.html">HOME</a>
+            <a href="index.html#categories">CATEGORIES</a>
+            <a href="index.html#products">COLLECTION</a>
+            <a href="cart.html" class="nav-cart">PANIER</a>
+            <a href="my-orders.html" class="nav-orders">MY ORDERS</a>
+            <a href="login.html" id="accountLink">ACCOUNT</a>
+            <a href="admin.html" class="nav-dashboard">DASHBOARD</a>
+
+        </nav>
+
+        <button
+            class="mobile-menu"
+            id="mobile-menu"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </header>
+
+
+    <main class="orders-page">
+
+        <div class="orders-container">
+
+            <div class="orders-breadcrumb">
+                <a href="index.html">HOME</a>
+                <span>✦</span>
+                <span>MY ORDERS</span>
+            </div>
+
+            <section class="orders-heading">
+
+                <span class="orders-eyebrow">
+                    YOUR PERSONAL COLLECTION
+                </span>
+
+                <h1>MY <span>ORDERS.</span></h1>
+
+                <p>
+                    Every order has a story.
+                    Follow yours, every step of the way.
+                </p>
+
+                <div class="orders-heading-line"></div>
+
+            </section>
+
+
+            <section class="orders-section">
+
+                <div class="orders-toolbar">
+
+                    <h2>Order History</h2>
+
+                    <span id="orders-count">YOUR ORDERS</span>
+
+                </div>
+
+                <div class="orders-list" id="orders-list">
+
+                    <div class="orders-loading">
+                        <p>LOADING YOUR ORDERS...</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <script type="module" src="my-orders.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</body>
+
+</html>
